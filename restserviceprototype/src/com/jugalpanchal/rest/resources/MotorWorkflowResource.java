@@ -52,7 +52,7 @@ public class MotorWorkflowResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CompanyMessageContract getById(@PathParam("companyId") long companyId) throws Exception {
 		try {
-			CompanyMessageContract company = null;
+			CompanyMessageContract company = new CompanyMessageContract();
 			// CompanyWorkflow workflow = new CompanyWorkflow();
 			// CompanyMessageContract company = workflow.getById(companyId);
 			return company;
