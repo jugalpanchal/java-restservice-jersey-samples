@@ -19,10 +19,10 @@ import javax.ws.rs.core.Response;
 
 import com.jugalpanchal.rest.messagecontract.CompanyMessageContract;
 
+//http://localhost:8080/restserviceprototype/rest/motorservice
 @Path("/motorservice")
 public class MotorWorkflowResource {
 
-	//http://localhost:8080/restserviceprototype/rest/motorservice
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String sayPlainTextHelloToTest() {
@@ -53,8 +53,6 @@ public class MotorWorkflowResource {
 	public CompanyMessageContract getById(@PathParam("companyId") long companyId) throws Exception {
 		try {
 			CompanyMessageContract company = new CompanyMessageContract();
-			// CompanyWorkflow workflow = new CompanyWorkflow();
-			// CompanyMessageContract company = workflow.getById(companyId);
 			return company;
 		} catch (Exception ex) {
 			throw ex;
@@ -66,7 +64,7 @@ public class MotorWorkflowResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CompanyMessageContract> get() throws Exception {
 		List<CompanyMessageContract> CompanyMessageContracts = null;
-		try {
+		try { 
 			// CompanyWorkflow workflow = new CompanyWorkflow();
 			// List<Company> companies = workflow.getCompanies();
 			// CompanyMessageContracts = CompanyExchange.convertList(companies);
@@ -120,9 +118,9 @@ public class MotorWorkflowResource {
 			 * Response response = Response.ok("" + isSaved)
 			 * .header("Access-Control-Allow-Origin", "*").build();
 			 */
+			
 			// CompanyWorkflow workflow = new CompanyWorkflow();
-			// Company company =
-			// CompanyExchange.convert(companyMessageContract);
+			// Company company = CompanyExchange.convert(companyMessageContract);
 			// isSaved = workflow.save(company);
 			return Response.status(200).entity("" + isSaved).build();
 		} catch (Exception ex) {
