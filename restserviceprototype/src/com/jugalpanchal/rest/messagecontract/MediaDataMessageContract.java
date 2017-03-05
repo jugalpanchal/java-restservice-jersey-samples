@@ -1,9 +1,6 @@
 package com.jugalpanchal.rest.messagecontract;
 
-import java.util.Date;
-
-public class MediaData {
-	
+public class MediaDataMessageContract {
 	private byte[] genericBlob;
 	private String type;
 	private String extension;
