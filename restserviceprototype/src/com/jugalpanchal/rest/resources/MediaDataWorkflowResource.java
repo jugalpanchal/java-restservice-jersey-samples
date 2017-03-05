@@ -1,7 +1,6 @@
 package com.jugalpanchal.rest.resources;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,11 +9,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.jugalpanchal.rest.messagecontract.MediaData;
+import com.jugalpanchal.app.workflows.MediaDataWorkflow;
+import com.jugalpanchal.rest.messagecontract.MediaDataMessageContract;
 import com.sun.jersey.core.header.ContentDisposition;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.BodyPart;
@@ -30,11 +29,9 @@ public class MediaDataWorkflowResource {
 	@GET
 	@Path("/getmediadata/{mediadataid}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public MediaData getMediaDataById(@PathParam("mediadataid") long mediaDataId) throws Exception {
+	public MediaDataMessageContract getMediaDataById(@PathParam("mediadataid") long mediaDataId) throws Exception {
 		try {
-
-			MediaData mediaData = null;
-			return mediaData;
+			return null;
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -43,10 +40,9 @@ public class MediaDataWorkflowResource {
 	@POST
 	@Path("/save")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response uploadMediaData(MediaData mediaData) throws Exception {
+	public Response uploadMediaData(MediaDataMessageContract mediaData) throws Exception {
 		try {
 			return Response.status(200).entity("").build();
-
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -69,14 +65,14 @@ public class MediaDataWorkflowResource {
 
 			InputStream uploadedInputStream = blobPartEntity.getInputStream();
 
-			/*MediaDataWorkflow workflow = new MediaDataWorkflow();
-			byte[] genericBlob = workflow.convertToByteArray(uploadedInputStream);
-			MediaData mediaData = new MediaData(null, 0L, genericBlob,
-					mediaType, mediaExt);
-			long id = workflow.saveMediaData(mediaData);*/
+			MediaDataWorkflow workflow = new MediaDataWorkflow();
+			byte[] genericBlob = workflow.convertToByteArray(uploadedInputStream); 
+			MediaDataMessageContract mediaData = new MediaDataMessageContract(genericBlob, mediaType, mediaExt);
+			//Convert MediaDataMessageContract to MediaData
+			//long id = workflow.saveMediaData(mediaData);
 
 			multiPart.cleanup();
-			return Response.status(200).entity("" + 0).build();
+			return Response.status(200).entity("").build();
 
 		} catch (Exception ex) {
 			throw ex;
@@ -95,13 +91,6 @@ public class MediaDataWorkflowResource {
 			throws Exception {
 		try {
 			String fileName = fileDetail.getFileName();
-			String mediaType = type;
-			String mediaExt = ext;
-
-			/*MediaDataWorkflow workflow = new MediaDataWorkflow();
-			byte[] genericBlob = workflow.convertToByteArray(uploadedInputStream);
-			MediaData mediaData = new MediaData(null, 0L, genericBlob, mediaType, mediaExt);
-			long id = workflow.saveMediaData(mediaData);*/
 
 			return Response.status(200).entity("" + 0).build();
 		} catch (Exception ex) {
@@ -117,21 +106,12 @@ public class MediaDataWorkflowResource {
 	public Response uploadMediaData(
 			@FormDataParam("files[]") List<FormDataBodyPart> files)
 			throws Exception {
-
 		String ids = null;
 		for (FormDataBodyPart formDataBodyPart : files) {
-
-			ContentDisposition headerOfFilePart = formDataBodyPart
-					.getContentDisposition();
-			InputStream uploadedInputStream = formDataBodyPart
-					.getValueAs(InputStream.class);
+			ContentDisposition headerOfFilePart = formDataBodyPart.getContentDisposition();
+			InputStream uploadedInputStream = formDataBodyPart.getValueAs(InputStream.class);
 
 			String fileName = headerOfFilePart.getFileName();
-
-			/*MediaDataWorkflow workflow = new MediaDataWorkflow();
-			byte[] genericBlob = workflow.convertToByteArray(uploadedInputStream);
-			MediaData mediaData = new MediaData(null, 0L, genericBlob, null, null);
-			long id = workflow.saveMediaData(mediaData);*/
 		}
 		return Response.status(200).entity("" + ids).build();
 
@@ -142,10 +122,8 @@ public class MediaDataWorkflowResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/multipleFiles1")
 	public String uploadMediaData(FormDataMultiPart formParams) {
-		formParams.getFields();
-
+		//formParams.getFields();
 		for (BodyPart bodyPart : formParams.getBodyParts()) {
-
 		}
 		return null;
 	}
@@ -160,6 +138,5 @@ public class MediaDataWorkflowResource {
 			@FormDataParam("ext") String[] ext) throws Exception {
 
 		return null;
-
 	}
 }

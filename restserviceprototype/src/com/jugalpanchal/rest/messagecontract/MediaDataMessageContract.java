@@ -5,6 +5,16 @@ public class MediaDataMessageContract {
 	private String type;
 	private String extension;
 
+	public MediaDataMessageContract() {
+		
+	}
+	
+	public MediaDataMessageContract(byte[] genericBlob, String type, String extension) {
+		this.genericBlob = genericBlob;
+		this.type = type;
+		this.extension = extension;
+	}
+
 	public String getType() {
 		return type;
 	}
