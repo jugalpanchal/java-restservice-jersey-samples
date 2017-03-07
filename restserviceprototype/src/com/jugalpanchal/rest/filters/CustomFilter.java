@@ -25,20 +25,16 @@ import com.sun.jersey.spi.container.ContainerResponse;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
 import com.sun.jersey.spi.container.ResourceFilter;
 
-public class CustomFilter implements ResourceFilter, ContainerRequestFilter,
-		ContainerResponseFilter, javax.servlet.Filter {
-	//Authorization: Basic YWRtaW46YWRtaW4=
+public class CustomFilter implements ResourceFilter, ContainerRequestFilter, ContainerResponseFilter, javax.servlet.Filter {
 	public static final String AUTHENTICATION_HEADER = "Authorization";
-
+	
 	// Do something with the outgoing response here
 	@Override
 	public ContainerResponse filter(ContainerRequest request, ContainerResponse response) {
 		int status = response.getStatus();
-
 		if (status == 200) {
+			// 'Access-Control-Allow-Origin' 'http://<myeshost1>:9200 http://<myeshost2>:9200';
 			response.getHttpHeaders().add("Access-Control-Allow-Origin", "*");
-			// 'Access-Control-Allow-Origin' 'http://<myeshost1>:9200
-			// http://<myeshost2>:9200';
 			response.getHttpHeaders().add("Access-Control-Allow-Credentials", "true");
 			response.getHttpHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
 			response.getHttpHeaders()
@@ -74,13 +70,11 @@ public class CustomFilter implements ResourceFilter, ContainerRequestFilter,
 
 	@Override
 	public void destroy() {
-
 	}
 	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain filter) throws IOException, ServletException {
-		
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filter) 
+			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 			String authCredentials = httpServletRequest.getHeader(AUTHENTICATION_HEADER);
@@ -108,7 +102,6 @@ public class CustomFilter implements ResourceFilter, ContainerRequestFilter,
 			if (allowURL.contains(url)) {
 				isAnonymousPost = true;
 			}
-
 			if (HttpMethod.POST.equals(httpMethodType) || HttpMethod.PUT.equals(httpMethodType) || HttpMethod.DELETE.equals(httpMethodType))
 			{
 				if (isAnonymousPost || authenticationStatus) {
