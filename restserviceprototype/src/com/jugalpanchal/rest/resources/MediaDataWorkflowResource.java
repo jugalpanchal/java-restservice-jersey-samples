@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.jugalpanchal.app.workflows.MediaDataWorkflow;
-import com.jugalpanchal.rest.messagecontract.MediaDataMessageContract;
+import com.jugalpanchal.rest.messagecontracts.MediaDataMessageContract;
 import com.sun.jersey.core.header.ContentDisposition;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.BodyPart;
@@ -67,7 +67,7 @@ public class MediaDataWorkflowResource {
 
 			MediaDataWorkflow workflow = new MediaDataWorkflow();
 			byte[] genericBlob = workflow.convert(uploadedInputStream); 
-			MediaDataMessageContract mediaData = new MediaDataMessageContract(genericBlob, mediaType, mediaExt);
+			//MediaDataMessageContract mediaData = new MediaDataMessageContract(genericBlob, mediaType, mediaExt);
 			//Convert MediaDataMessageContract to MediaData
 			//long id = workflow.saveMediaData(mediaData);
 
@@ -79,8 +79,16 @@ public class MediaDataWorkflowResource {
 		}
 	}
 	
-	/* name="file" must be same in HTML */
-	// Final upload single image
+	/**
+	 * name="file" must be same in HTML Final upload single image
+	 * @param uploadedInputStream
+	 * @param fileDetail
+	 * @param type
+	 * @param ext
+	 * @return
+	 * @throws Exception
+	 * @author @jugalpanhcal
+	 */
 	@POST
 	@Path("/uploadmediadatafile")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -98,8 +106,13 @@ public class MediaDataWorkflowResource {
 		}
 	}
 
-	// uploading multiple images
-
+	/**
+	 * uploading multiple images
+	 * @param files
+	 * @return
+	 * @throws Exception
+	 * @author @jugalpanchal
+	 */
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Path("/multipleFiles")

@@ -17,9 +17,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.jugalpanchal.rest.messagecontract.CompanyMessageContract;
+import com.jugalpanchal.rest.messagecontracts.CompanyMessageContract;
 
-//http://localhost:8080/restserviceprototype/rest/motorservice
+/**
+ * http://localhost:8080/restserviceprototype/rest/motorservice 
+ * @author @jugalpanchal
+ */
 @Path("/motorservice")
 public class MotorWorkflowResource {
 
@@ -35,13 +38,12 @@ public class MotorWorkflowResource {
 	}
 
 	@GET
-	@Path("/companycount")
+	@Path("/companiescount")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Long getCount() throws Exception {
 		try {
 			Long count = 10L;
 			return count;
-
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -52,8 +54,8 @@ public class MotorWorkflowResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CompanyMessageContract getById(@PathParam("companyId") long companyId) throws Exception {
 		try {
-			CompanyMessageContract company = new CompanyMessageContract();
-			return company;
+			//Get company from persistent context and convert to message contract. 
+			return null;
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -67,7 +69,7 @@ public class MotorWorkflowResource {
 		try { 
 			// CompanyWorkflow workflow = new CompanyWorkflow();
 			// List<Company> companies = workflow.getCompanies();
-			// CompanyMessageContracts = CompanyExchange.convertList(companies);
+			// CompanyMessageContracts = CompanyExchange.convert(companies);
 			return CompanyMessageContracts;
 		} catch (Exception ex) {
 			throw ex;
@@ -92,9 +94,13 @@ public class MotorWorkflowResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CompanyMessageContract> getCompaniesByIdList(@QueryParam("companyids") List<Long> classNameIds)
 			throws Exception {
-		// Integer Long String
-		List<CompanyMessageContract> classNameMessageContracts = new ArrayList<CompanyMessageContract>();
-		return classNameMessageContracts;
+		try {
+			// Integer Long String
+			List<CompanyMessageContract> classNameMessageContracts = new ArrayList<CompanyMessageContract>();
+			return classNameMessageContracts;
+		} catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@POST
@@ -114,10 +120,7 @@ public class MotorWorkflowResource {
 	public Response save(CompanyMessageContract companyMessageContract) throws Exception {
 		boolean isSaved = false;
 		try {
-			/*
-			 * Response response = Response.ok("" + isSaved)
-			 * .header("Access-Control-Allow-Origin", "*").build();
-			 */
+			//Response response = Response.ok("" + isSaved).header("Access-Control-Allow-Origin", "*").build();
 			
 			// CompanyWorkflow workflow = new CompanyWorkflow();
 			// Company company = CompanyExchange.convert(companyMessageContract);
@@ -143,6 +146,7 @@ public class MotorWorkflowResource {
 	public Response update(CompanyMessageContract company) throws Exception {
 		boolean isUpdated = false;
 		try {
+			//Convert message contract to persistent class and update it and change isUpdated flag.
 			return Response.status(200).entity("" + isUpdated).build();
 		} catch (Exception ex) {
 			throw ex;

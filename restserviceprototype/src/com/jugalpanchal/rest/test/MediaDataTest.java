@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
-import com.jugalpanchal.rest.messagecontract.MediaDataMessageContract;
+import com.jugalpanchal.rest.messagecontracts.MediaDataMessageContract;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
