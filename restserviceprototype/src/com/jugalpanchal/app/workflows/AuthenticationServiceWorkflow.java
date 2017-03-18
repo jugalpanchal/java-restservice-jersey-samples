@@ -1,31 +1,37 @@
 package com.jugalpanchal.app.workflows;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 
 import com.sun.jersey.core.util.Base64;
 
 public class AuthenticationServiceWorkflow {
 
-	public boolean authenticate(String authCredentials) throws Exception {
+	/**
+	 * @param authCredentials Header value format will be "Basic encodedstring" for Basic authentication.
+	 * Example "Basic YWRtaW46YWRtaW4="
+	 * @return If user is valid or not.
+	 * @throws UnsupportedEncodingException
+	 * @author @jugalpanchal
+	 */
+	public boolean authenticate(String authCredentials) throws UnsupportedEncodingException {
 		boolean authenticationStatus = false;
-		if (null != authCredentials) {
-			// header value format will be "Basic encodedstring" for Basic
-			// authentication. Example "Basic YWRtaW46YWRtaW4="
-			final String encodedUserPassword = authCredentials.replaceFirst("Basic" + " ", "");
-			String usernameAndPassword = null;
-			try {
-				byte[] decodedBytes = Base64.decode(encodedUserPassword);
-				//byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
-				usernameAndPassword = new String(decodedBytes, "UTF-8");
-				
-				final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-				final String username = tokenizer.nextToken();
-				final String password = tokenizer.nextToken();
-				// call some UserService/LDAP here
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (authCredentials != null) {
+			final String encodedUserIdAndPassword = authCredentials.replaceFirst("Basic" + " ", "");
+
+			byte[] decodedBytes = Base64.decode(encodedUserIdAndPassword);
+			// byte[] decodedBytes = Base64.getDecoder().decode(encodedUserIdAndPassword);
+
+			String userIdAndPassword = new String(decodedBytes, "UTF-8");
+			final StringTokenizer tokenizer = new StringTokenizer(userIdAndPassword, ":");
+			
+			@SuppressWarnings("unused")
+			final String username = tokenizer.nextToken();
+			@SuppressWarnings("unused")
+			final String password = tokenizer.nextToken();
+
+			// call some UserService/LDAP here to authenticate user.
+			authenticationStatus = true;
 		}
 		return authenticationStatus;
 	}

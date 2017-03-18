@@ -66,7 +66,7 @@ public class MediaDataWorkflowResource {
 			InputStream uploadedInputStream = blobPartEntity.getInputStream();
 
 			MediaDataWorkflow workflow = new MediaDataWorkflow();
-			byte[] genericBlob = workflow.convertToByteArray(uploadedInputStream); 
+			byte[] genericBlob = workflow.convert(uploadedInputStream); 
 			MediaDataMessageContract mediaData = new MediaDataMessageContract(genericBlob, mediaType, mediaExt);
 			//Convert MediaDataMessageContract to MediaData
 			//long id = workflow.saveMediaData(mediaData);
