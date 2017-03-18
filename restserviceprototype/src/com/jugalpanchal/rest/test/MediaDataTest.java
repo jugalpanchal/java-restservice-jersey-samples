@@ -48,6 +48,7 @@ public class MediaDataTest {
 			// response.getStatus()
 			// }
 		} catch (Exception ex) {
+			fail("Issue");
 		}
 	}
 
@@ -73,6 +74,7 @@ public class MediaDataTest {
 			client.destroy();
 
 		} catch (Exception ex) {
+			fail("Issue");
 		}
 	}
 
@@ -88,6 +90,7 @@ public class MediaDataTest {
 			File file = new File("D:/ClientExample/test.jpg");
 			ImageIO.write(bi, "jpg", file);
 		} catch (Exception ex) {
+			fail("Issue");
 		}
 	}
 }
