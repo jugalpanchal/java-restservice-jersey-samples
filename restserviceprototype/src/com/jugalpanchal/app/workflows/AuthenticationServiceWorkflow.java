@@ -8,16 +8,16 @@ import com.sun.jersey.core.util.Base64;
 public class AuthenticationServiceWorkflow {
 
 	/**
-	 * @param authCredentials Header value format will be "Basic encodedstring" for Basic authentication.
+	 * @param authCredential Header value format will be "Basic encodedstring" for Basic authentication.
 	 * Example "Basic YWRtaW46YWRtaW4="
 	 * @return If user is valid or not.
 	 * @throws UnsupportedEncodingException
 	 * @author @jugalpanchal
 	 */
-	public boolean authenticate(String authCredentials) throws UnsupportedEncodingException {
+	public boolean authenticate(String authCredential) throws UnsupportedEncodingException {
 		boolean authenticationStatus = false;
-		if (authCredentials != null) {
-			final String encodedUserIdAndPassword = authCredentials.replaceFirst("Basic" + " ", "");
+		if (authCredential != null) {
+			final String encodedUserIdAndPassword = authCredential.replaceFirst("Basic" + " ", "");
 
 			byte[] decodedBytes = Base64.decode(encodedUserIdAndPassword);
 			// byte[] decodedBytes = Base64.getDecoder().decode(encodedUserIdAndPassword);
